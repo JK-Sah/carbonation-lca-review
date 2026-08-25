@@ -56,6 +56,8 @@ the proposed Minimum Reporting Set.
 ## Contents
 
 ```
+docs/
+  index.html                 interactive net-benefit calculator (served via GitHub Pages)
 search/
   search_queries.json        verbatim strings, all 8 primary queries + confirmatory search
   openalex_records.json      full record set returned by the search (713 unique)
@@ -77,6 +79,16 @@ src/
   probabilistic_sensitivity.py   Monte Carlo (n=200,000) and Sobol indices
   sobol_robustness.py        re-tests the Sobol result under four prior specifications
 ```
+
+## Interactive tool
+
+An interactive implementation of the net-benefit condition model, in which the parameters can
+be varied and the net benefit read against a chosen baseline, is served from `docs/`:
+
+**https://jk-sah.github.io/carbonation-lca-review/**
+
+It is a single self-contained HTML file with no external dependencies, and implements the same
+model as `src/net_benefit_model.py`. It does not depend on any study-level dataset.
 
 ## Reproducing
 
