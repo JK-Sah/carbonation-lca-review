@@ -1,5 +1,7 @@
 # Carbonation-cured cement-based products — systematic review, net-benefit framework, and reporting set
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22089287.svg)](https://doi.org/10.5281/zenodo.22089287)
+
 Data, search records and analysis code for:
 
 > J.K. Sah, *When is carbonation-cured concrete actually cleaner? A systematic review, a
@@ -123,8 +125,15 @@ incomplete**. Five records could not be retrieved and one is pending; all are li
 
 ## Citation
 
-Cite the manuscript for the findings and this repository for the data and code. If you use
-the released records, please also cite OpenAlex as the source of the bibliographic data.
+Cite the manuscript for the findings and this archive for the data and code:
+
+> Sah, J. K. (2026). *Carbonation-cured cement-based products: systematic review, net-benefit
+> framework, and reporting set — data and code* (v2.0.0). Zenodo.
+> https://doi.org/10.5281/zenodo.22089287
+
+`10.5281/zenodo.22089287` is the concept DOI and always resolves to the latest version;
+`10.5281/zenodo.22089288` is this specific release. If you use the released records, please
+also cite OpenAlex as the source of the bibliographic data.
 
 ## License
 

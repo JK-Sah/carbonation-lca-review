@@ -18,6 +18,9 @@ authors:
       Department of Mechanical and Industrial Engineering, Kate Gleason College of
       Engineering, Rochester Institute of Technology, Rochester, NY, USA
 license: MIT
+doi: "10.5281/zenodo.22089287"
+version: "2.0.0"
+repository-code: "https://github.com/JK-Sah/carbonation-lca-review"
 keywords:
   - carbonation curing
   - CO2 mineralization
