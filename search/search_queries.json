@@ -1,0 +1,40 @@
+{
+ "primary_search": {
+  "database": "OpenAlex",
+  "interface": "public REST API",
+  "field": "title_and_abstract.search",
+  "filters": "from_publication_date:2000-01-01; type:article",
+  "date": "2026-08-23",
+  "queries": {
+   "Q1_curing_x_lca": "(\"carbonation curing\" OR \"CO2 curing\" OR \"carbon dioxide curing\" OR \"carbonation-cured\" OR \"CO2-cured\") AND (\"life cycle assessment\" OR \"life-cycle assessment\" OR \"global warming potential\" OR \"carbon footprint\" OR \"embodied carbon\")",
+   "Q2_mineralization": "(\"CO2 mineralization\" OR \"carbon mineralization\" OR \"mineral carbonation\") AND (concrete OR cement OR cementitious OR masonry) AND (\"life cycle assessment\" OR \"global warming potential\" OR \"carbon footprint\")",
+   "Q3_accel_carb": "(\"accelerated carbonation\") AND (concrete OR cement OR block OR precast) AND (\"life cycle\" OR \"global warming potential\" OR \"carbon footprint\" OR \"CO2 emissions\")",
+   "Q4_injection": "(\"CO2 injection\" OR \"carbon dioxide injection\" OR \"CO2 utilization\") AND (\"ready-mixed concrete\" OR \"ready mixed concrete\" OR concrete) AND (\"life cycle assessment\" OR \"carbon footprint\" OR \"global warming potential\")",
+   "Q5_co2_utilization_benefit": "(\"CO2 utilization\" OR \"carbon dioxide utilization\" OR \"CCU\") AND (concrete OR cement OR \"concrete curing\") AND (\"climate benefit\" OR \"net CO2\" OR \"CO2 benefit\" OR \"CO2 emissions\" OR \"emission reduction\")",
+   "Q6_carbonated_products": "(carbonated OR carbonation) AND (\"recycled concrete\" OR \"concrete blocks\" OR \"concrete products\" OR \"cement paste\" OR \"recycled aggregate\") AND (\"life cycle assessment\" OR \"life-cycle assessment\" OR \"global warming potential\" OR \"carbon footprint\")",
+   "Q7_sequestration_uptake": "(\"CO2 sequestration\" OR \"CO2 uptake\" OR \"carbon uptake\" OR \"carbon sequestration\") AND (concrete OR cement OR cementitious) AND (\"life cycle assessment\" OR \"global warming potential\" OR \"carbon footprint\" OR \"embodied carbon\")",
+   "Q8_carbon_capture_concrete": "(\"carbon capture\" OR \"captured CO2\" OR \"flue gas\") AND (concrete OR \"cement-based\" OR masonry OR precast) AND (\"life cycle assessment\" OR \"global warming potential\" OR \"carbon footprint\")"
+  },
+  "records_per_query": {
+   "Q1_curing_x_lca": 136,
+   "Q2_mineralization": 52,
+   "Q3_accel_carb": 128,
+   "Q4_injection": 10,
+   "Q5_co2_utilization_benefit": 113,
+   "Q6_carbonated_products": 148,
+   "Q7_sequestration_uptake": 266,
+   "Q8_carbon_capture_concrete": 81
+  },
+  "total_retrieved": 934,
+  "unique_after_deduplication": 713
+ },
+ "confirmatory_search": {
+  "database": "Web of Science Core Collection",
+  "interface": "Advanced Search, Topic field",
+  "date": "2026-08-24",
+  "records_retrieved": 379,
+  "query": "(\"carbonation curing\" OR \"CO2 curing\" OR \"carbonation-cured\" OR \"CO2-cured\" OR \"accelerated carbonation\" OR \"mineral carbonation\" OR \"CO2 mineralization\" OR \"CO2 mineralisation\") AND (concrete OR cement OR cementitious OR mortar OR masonry OR precast OR aggregate* OR binder*) AND (\"life cycle assessment\" OR \"life-cycle assessment\" OR LCA OR \"global warming potential\" OR GWP OR \"carbon footprint\" OR \"embodied carbon\")",
+  "overlap_test": "16 highest-relevance records checked against the primary set; 14 already present"
+ },
+ "scopus": "Not available: the platform remained in Scopus Preview mode through the institutional proxy, the platform's own access check, and after personal sign-in."
+}

@@ -1,0 +1,18 @@
+Study,Functional unit,Boundary,Comparator,Baseline as reported,Outcome as reported,Location
+Monkman & MacDonald (2017),1 m³ concrete,cradle-to-gate,producer's reference control mix,not stated as a single value,4.6% carbon-footprint reduction; 5–8% binder removal,Abstract; Conclusions
+Huang et al. (2019),1 m³ non-hollow block,cradle-to-gate,steam-cured OPC block,419 kg CO₂-eq/m³,292–454 kg CO₂-eq/m³; “up to 30%”,Abstract; Conclusions
+Di Maria et al. (2020),"0.08 m³ wall block, matched on compressive strength",cradle-to-gate,PC-based concrete block,not stated as a single value,−68% / −77% / −71% by CO₂ recovery route,Sec 2.2.1; Table 1; Results
+Ostovari et al. (2021),1 t cement,cradle-to-gate,conventional Portland cement,not stated as a single value,−0.16 t CO₂e/t (−0.53 t at 55 wt%); 5–8 kg/t per 1% blend,Abstract; Sec 3.2
+Tanzer et al. (2021),1 m³ 30 MPa concrete,temporally explicit life cycle,benchmark without carbonation,280 kg CO₂/m³ net,−9 kg; +42 kg; +19 kg by scenario,Table 3
+Wang et al. (2022),1 m³ product,cradle-to-gate,autoclaved curing,not stated as a single value,−182 kg CO₂-Eq/m³; net −120 kg; ~65% from sequestration,Abstract; Fig. 12
+Li et al. (2023),1 t mortar,cradle-to-gate,Portland cement mortar,378 kg CO₂ eq,93.6 kg CO₂ eq; −75.2%,Sec 3.7; Fig. 11
+Shang et al. (2023),1 m³ recycled aggregate block,cradle-to-gate,standard curing,539.5 kg CO₂-eq/m³,−33.3% pressurised; −52.8% wet (254.7 kg),Sec 2.2; Results
+Fu et al. (2024),1 t cement,cradle-to-gate,classical cement manufacture,519 kg CO₂-eq/t,500.3 kg CO₂-eq/t; 3.6%,Carbon footprint section
+Farinha et al. (2024),1 m³ mortar,cradle-to-gate,natural-aggregate reference; same RA uncarbonated,not reported,non-carbonated RA −3.3 to −7.5%; carbonated RA up to −37%,Sec 2.1; Sec 4; Table 8
+Ju et al. (2026),1 t cured cementitious paste,cradle-to-gate,water-cured OPC,591 kg CO₂ eq/t,99 / 155 / 231 kg CO₂ eq/t → −83% / −74% / −61%,Sec 4.6
+Mao et al. (2026),1 t block,cradle-to-gate,"cast block, 100% Portland cement",200.97 kg CO₂/t,−27.7% and −29.7% at 30% RCF; −1.51 kg/t at 100% RCF,Sec 2.1; Sec 3.1; Fig. 3
+Sapata et al. (2026),1 m³ 3D-printable concrete,cradle-to-gate,natural-aggregate reference mixture,485.88 kg CO₂-eq/m³,"carbonation +3.1%, +6.3%, +11.3% with process electricity",LCA section; Table 4
+Hassan et al. (2026),"1 m³ concrete, 30 MPa",cradle-to-gate,"identical mix, no dry ice (DI-0)",345.8 kg CO₂-eq/m³,"−2.1%, −3.3%, −3.8%; cost +15.6%, +30.8%, +45.9%",Sec 2; Table 7; Table 8
+Rahmani et al. (2026),1 m³ bio-composite,cradle-to-gate,OPC-based system,not reported (ratio only),34.6% of OPC impact (−65.4%),LCA section; Fig. 13
+Noshin et al. (2026),1 kg cementitious material,cradle-to-gate,control OPC mixture,not reported,−21% at 25% carbonated-limestone replacement,LCA section; Fig. 15
+Amar et al. (2026),1 m³ concrete,cradle-to-gate,conventional concrete control,not reported,"−14% (20% GGBS + 5% biochar, ACC)",Highlights; Fig. 28

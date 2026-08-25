@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.png
+*.tif
+!docs/*.png
+search/screening_log_regenerated.csv
