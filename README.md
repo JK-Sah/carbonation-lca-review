@@ -73,7 +73,7 @@ extraction/
                              outcome, and the page/table/section of every value
 src/
   search_openalex.py         re-executes the 8 queries; reproduces 934 / 713
-  screen_records.py          automated screening pass (agrees with the log on 699/713)
+  screen_records.py          reproduces the screening log exactly (713/713)
   figure1_prisma.py          Figure 1 (PRISMA flow diagram)
   net_benefit_model.py       the net-benefit condition model; reproduces Table 4
   probabilistic_sensitivity.py   Monte Carlo (n=200,000) and Sobol indices
@@ -116,15 +116,30 @@ python3 sobol_robustness.py             # → Sobol indices under four prior spe
 OpenAlex is a moving index: re-running the search after 23 August 2026 will return more
 records. `search/openalex_records.json` is the frozen set the manuscript reports.
 
-**On `screen_records.py`.** Screening was single-rater and performed by the author;
-`search/screening_log.csv` is the authoritative record of those decisions and is the source of
-the 322 excluded / 391 sought counts in the manuscript. The script implements the automated
-pass that supported that screen and is provided so the rules are inspectable — it is not the
-screen itself. It agrees with the log on **699 of 713 records (98.0%)**. All 14 differences run
-one way: literature reviews, bibliometric analyses and sectoral or geological CCS assessments
-that the author excluded on reading the title, and that the regex rules pass through. Running
-the script therefore reports 405 to full text against the log's 391. It writes to
-`search/screening_log_regenerated.csv` and never overwrites the released log.
+**On `screen_records.py`.** The script reproduces `search/screening_log.csv` exactly — the same
+decision and the same coded reason for all **713 records**, giving the **391 sought / 322
+excluded** counts the manuscript reports (E8 221, E7 68, E1 21, E4 7, E2 5).
+
+It gets there two ways, and the script separates them in a `decided_by` column. **699 records
+are decided by the coded rules.** The other **14 are recorded rater decisions**, listed one by
+one in `MANUAL_DECISIONS` with the reason logged against each. Screening was single-rater, and
+those fourteen — mostly literature reviews, bibliometric analyses, and sectoral or geological
+CO₂-storage assessments — were excluded by the author on reading them, not by rule.
+
+They are written out explicitly rather than folded into the regular expressions because **no
+function of title and abstract reproduces them.** The log excludes *"Accelerated carbonation
+curing as a CCUS strategy: a bibliometric and technical review"* at this stage while sending
+*"Review on carbonation curing of cement-based materials"* to full text; a rule excluding
+reviews here would also exclude 45 records the log carries forward, and would change the screen
+rather than reproduce it. Reviews are, by design, mostly taken to full text and excluded there
+under X5. Listing the fourteen keeps every departure from the automated pass auditable.
+
+One known discrepancy is recorded in the script rather than corrected: Di Maria et al. 2020, an
+included study, appears in the log as excluded at this stage under E7, because it has no indexed
+abstract and its title carries no term the product pattern matches. It entered the included set
+by other means.
+
+The script writes to `search/screening_log_regenerated.csv` and never overwrites the released log.
 
 ## Scope and limitations
 
