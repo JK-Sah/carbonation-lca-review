@@ -19,9 +19,9 @@ KNOWN DISCREPANCY. One of the 17 included studies, Di Maria et al. 2020 (10.1016
 title -- "Environmental assessment of CO2 mineralisation for sustainable construction
 materials" -- carries no term the PRODUCT pattern matches, so the product criterion fires on
 the title alone. This is the same failure mode as the Monkman and MacDonald case described
-below, and the study entered the included set by other means. The log is reproduced here as
-released; the discrepancy is recorded rather than silently corrected, because correcting it
-would change the reported counts.
+below: the study was recovered by hand-search and is included on its full text. Both cases are
+disclosed in manuscript Section 3.4. The log is reproduced here as released; the discrepancy is
+recorded rather than silently corrected, because correcting it would change the reported counts.
 
 RULE THAT MATTERS: a missing abstract is never grounds for exclusion beyond the
 product criterion. Records without an indexed abstract proceed to full-text assessment
