@@ -1,0 +1,31 @@
+{
+  "title": "Carbonation-cured cement-based products: systematic review, net-benefit framework, and reporting set — data and code",
+  "description": "Search records, screening decisions, extraction records and analysis code for a PRISMA 2020 systematic review of life-cycle assessments of carbonation-cured cement-based products, together with a transparent net-benefit condition model and a proposed minimum reporting set. No effect sizes are pooled; every released value is transcribed from a primary source with its location recorded. Replaces an earlier release (10.5281/zenodo.22061901) whose effect-size dataset was unverified and has been withdrawn.",
+  "upload_type": "software",
+  "license": "mit-license",
+  "creators": [
+    {
+      "name": "Sah, J. K.",
+      "affiliation": "Department of Mechanical and Industrial Engineering, Kate Gleason College of Engineering, Rochester Institute of Technology, Rochester, NY, USA",
+      "orcid": "0000-0002-7643-5137"
+    }
+  ],
+  "keywords": [
+    "carbonation curing",
+    "CO2 mineralization",
+    "life cycle assessment",
+    "systematic review",
+    "PRISMA 2020",
+    "cleaner production",
+    "cement",
+    "concrete"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.22061901",
+      "relation": "obsoletes",
+      "resource_type": "software",
+      "scheme": "doi"
+    }
+  ]
+}
