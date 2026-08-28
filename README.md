@@ -75,6 +75,8 @@ src/
   search_openalex.py         re-executes the 8 queries; reproduces 934 / 713
   screen_records.py          reproduces the screening log exactly (713/713)
   figure1_prisma.py          Figure 1 (PRISMA flow diagram)
+  figure2_benefit_condition.py   Figure 2 (net-benefit condition framework)
+  figure3_probabilistic.py   Figure 3 (Sobol indices and Monte Carlo probabilities)
   net_benefit_model.py       the net-benefit condition model; reproduces Table 4
   probabilistic_sensitivity.py   Monte Carlo (n=200,000) and Sobol indices
   sobol_robustness.py        re-tests the Sobol result under four prior specifications
@@ -111,6 +113,9 @@ cd src
 python3 net_benefit_model.py            # → Table 4 (r = 76.7 / 33.0 / 7.3; s* = 4.90 / 2.22 / 1.47)
 python3 probabilistic_sensitivity.py    # → Tables 5–6; results/probabilistic_results.json
 python3 sobol_robustness.py             # → Sobol indices under four prior specifications
+python3 figure2_benefit_condition.py    # → Figure2_BenefitCondition.png/.tif
+python3 figure3_probabilistic.py        # → Figure3_ProbabilisticSensitivity.png/.tif
+
 ```
 
 OpenAlex is a moving index: re-running the search after 23 August 2026 will return more
