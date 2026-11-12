@@ -1,82 +1,65 @@
+"""Title-and-abstract screen. Writes search/screening_log_regenerated.csv.
+
+Over the released record set this reproduces search/screening_log.csv exactly:
+same decision and same coded reason for all 713 records, 391 to full text and
+322 excluded (E8 221, E7 68, E1 21, E4 7, E2 5).
+
+It gets there two ways. 699 records are decided by the rules in screen(); the
+other 14 are rater decisions listed in MANUAL_DECISIONS. Screening was
+single-rater and those fourteen were excluded on reading, not by rule, so they
+are written out rather than folded into the patterns -- no function of title and
+abstract reproduces them. The log excludes one bibliometric review of carbonation
+curing at this stage while sending another review of the same subject to full
+text; a rule excluding reviews here would also exclude 45 records the log carries
+forward. The decided_by column marks which is which.
+
+A missing abstract is never grounds for exclusion beyond the product criterion;
+such records go to full text on the title alone. Two included studies trip that
+criterion anyway and were recovered by hand-search -- Monkman & MacDonald 2017
+and Di Maria et al. 2020 -- both disclosed in Section 3.4. The log is reproduced
+as released rather than corrected, since correcting it would move the counts.
 """
-Title-and-abstract screen — applies the coded eligibility rules and writes screening_log_regenerated.csv.
-
-RELATIONSHIP TO THE RELEASED LOG. Run over the released record set this script reproduces
-search/screening_log.csv exactly: the same decision and the same coded reason for all 713
-records, giving 391 to full text and 322 excluded (E8 221, E7 68, E1 21, E4 7, E2 5), the
-counts reported in manuscript Section 4.1 and Figure 1.
-
-It reaches them two ways, and the distinction matters. 699 records are decided by the coded
-rules in screen(). The remaining 14 are recorded rater decisions, listed individually in
-MANUAL_DECISIONS above with the reason logged against each: screening was single-rater, and
-those fourteen were excluded by the author on reading them rather than by any rule. They are
-written out explicitly, not folded into the regular expressions, because no function of title
-and abstract reproduces them -- see the note on MANUAL_DECISIONS. Anyone auditing the screen
-can therefore see exactly which exclusions are mechanical and which are judgment.
-
-KNOWN DISCREPANCY. One of the 17 included studies, Di Maria et al. 2020 (10.1016/j.ijggc.2019
-.102882), is recorded in the log as excluded here under E7. It has no indexed abstract and its
-title -- "Environmental assessment of CO2 mineralisation for sustainable construction
-materials" -- carries no term the PRODUCT pattern matches, so the product criterion fires on
-the title alone. This is the same failure mode as the Monkman and MacDonald case described
-below: the study was recovered by hand-search and is included on its full text. Both cases are
-disclosed in manuscript Section 3.4. The log is reproduced here as released; the discrepancy is
-recorded rather than silently corrected, because correcting it would change the reported counts.
-
-RULE THAT MATTERS: a missing abstract is never grounds for exclusion beyond the
-product criterion. Records without an indexed abstract proceed to full-text assessment
-on the title alone. An earlier version of this screen violated that rule and wrongly
-excluded an eligible study (Monkman & MacDonald 2017) that has no indexed abstract and
-no life-cycle term in its title.
-"""
-import csv, json, re
+import csv
+import json
 import os
+import re
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SEARCH = os.path.join(ROOT, "search")
 
-INTERV = re.compile(r"carbonation curing|carbonation-cured|co2 curing|co2-cured|carbon dioxide curing|"
-                    r"accelerated carbonation|forced carbonation|wet carbonation|co2 injection|"
-                    r"carbon dioxide injection|co2 mineraliz|mineral carbonation|carbon mineraliz|"
-                    r"co2 utiliz|carbon dioxide utiliz|co2 sequestrat|co2 uptake|"
-                    r"carbonated (recycled|concrete|cement|aggregate|paste|fines)", re.I)
-QUANT = re.compile(r"life ?cycle assessment|life-cycle assessment|\blca\b|global warming potential|\bgwp\b|"
-                   r"carbon footprint|embodied carbon|co2 emission|carbon emission|emission reduction|"
-                   r"net co2|climate benefit|kg co2|sustainab", re.I)
-PRODUCT = re.compile(r"concrete|cement|cementitious|mortar|masonry|block|precast|paver|binder|clinker|aggregate", re.I)
-DURABILITY = re.compile(r"durabilit|corrosion|carbonation depth|service life prediction|"
-                        r"reinforcement corrosion|chloride", re.I)
-GEOLOGICAL = re.compile(r"geological storage|saline aquifer|enhanced oil recovery|subsurface|"
-                        r"flue gas desulfuriz", re.I)
-LCA_STRICT = re.compile(r"life ?cycle assessment|life-cycle assessment|\blca\b|global warming potential|"
-                        r"\bgwp\b|carbon footprint|embodied carbon", re.I)
+INTERVENTION = re.compile(
+    r"carbonation curing|carbonation-cured|co2 curing|co2-cured"
+    r"|carbon dioxide curing|accelerated carbonation|forced carbonation"
+    r"|wet carbonation|co2 injection|carbon dioxide injection|co2 mineraliz"
+    r"|mineral carbonation|carbon mineraliz|co2 utiliz|carbon dioxide utiliz"
+    r"|co2 sequestrat|co2 uptake"
+    r"|carbonated (recycled|concrete|cement|aggregate|paste|fines)", re.I)
+
+OUTCOME = re.compile(
+    r"life ?cycle assessment|life-cycle assessment|\blca\b"
+    r"|global warming potential|\bgwp\b|carbon footprint|embodied carbon"
+    r"|co2 emission|carbon emission|emission reduction|net co2"
+    r"|climate benefit|kg co2|sustainab", re.I)
+
+PRODUCT = re.compile(
+    r"concrete|cement|cementitious|mortar|masonry|block|precast|paver"
+    r"|binder|clinker|aggregate", re.I)
+
+DURABILITY = re.compile(
+    r"durabilit|corrosion|carbonation depth|service life prediction"
+    r"|reinforcement corrosion|chloride", re.I)
+
+GEOLOGICAL = re.compile(
+    r"geological storage|saline aquifer|enhanced oil recovery|subsurface"
+    r"|flue gas desulfuriz", re.I)
+
+LCA_TERM = re.compile(
+    r"life ?cycle assessment|life-cycle assessment|\blca\b"
+    r"|global warming potential|\bgwp\b|carbon footprint|embodied carbon", re.I)
+
+CURED_PRODUCT = re.compile(PRODUCT.pattern + r".{0,60}(cured|curing|mineraliz)", re.I)
 
 
-# ---------------------------------------------------------------------------
-# RECORDED RATER DECISIONS (not rules).
-#
-# Screening was single-rater. These fourteen records were excluded at title and
-# abstract by the author on reading them, and the coded rules below do not derive
-# those exclusions -- the rules would pass all fourteen through to full text.
-# They are listed explicitly, with the reason recorded in the screening log and a
-# note on what the record actually is, so that every departure from the automated
-# pass is visible and auditable rather than hidden inside a regular expression.
-#
-# WHY THESE ARE NOT ENCODED AS RULES. There is no function of title and abstract
-# that reproduces them. The log excludes "Accelerated carbonation curing as a CCUS
-# strategy: a bibliometric and technical review" at this stage while sending
-# "Review on carbonation curing of cement-based materials" to full text; a rule
-# excluding reviews here would also exclude 45 records the log sends forward, and
-# would change the screen rather than reproduce it. Reviews are, by design, mostly
-# carried to full text and excluded there under X5.
-#
-# CAVEAT ON THE RECORDED REASONS. The codes below are transcribed verbatim from
-# the screening log. For most of these records the code is a poor description of
-# the ground actually taken -- nine are literature reviews or bibliometric
-# analyses (X5), four are sectoral or geological CO2 storage assessments (X2/X4),
-# and one is a materials study with no life-cycle accounting (X3). The verbatim
-# codes are kept so that this script reproduces the released log exactly; the
-# "basis" note records what the record is.
-# ---------------------------------------------------------------------------
 MANUAL_DECISIONS = {
     # DOI: (logged reason, basis)
     "10.1016/j.jcou.2022.102015": (
@@ -123,60 +106,77 @@ MANUAL_DECISIONS = {
         "review of solid-waste valorization in cementitious binders"),
 }
 
-
 def screen(title, abstract):
-    """Return (decision, coded_reason) for one record."""
     text = f"{title} {abstract}"
     has_abstract = bool(abstract.strip())
+
     if not PRODUCT.search(text):
         return "exclude", "E7 not a cement/concrete product"
-    if not INTERV.search(text) and has_abstract:
+    if not INTERVENTION.search(text) and has_abstract:
         return "exclude", "E8 no carbonation/CO2-utilisation intervention"
     if not has_abstract:
         return "full-text", "no abstract in index - cannot screen on title alone"
-    if not QUANT.search(text):
+    if not OUTCOME.search(text):
         return "exclude", "E4 no quantitative environmental outcome"
-    if DURABILITY.search(text) and not LCA_STRICT.search(text):
+    if DURABILITY.search(text) and not LCA_TERM.search(text):
         return "exclude", "E1 natural carbonation / durability focus"
-    if GEOLOGICAL.search(text) and not re.search(PRODUCT.pattern + r".{0,60}(cured|curing|mineraliz)", text, re.I):
+    if GEOLOGICAL.search(text) and not CURED_PRODUCT.search(text):
         return "exclude", "E2 geological CCS without concrete product"
+
     return "full-text", "meets intervention + product + outcome criteria"
 
 
-def inverted_to_text(inv):
-    if not inv:
+def flatten_abstract(inverted):
+    if not inverted:
         return ""
-    pos = {p: w for w, ps in inv.items() for p in ps}
-    return " ".join(pos[k] for k in sorted(pos))
+    position = {p: word for word, spots in inverted.items() for p in spots}
+    return " ".join(position[k] for k in sorted(position))
+
+
+def row_for(work):
+    abstract = work.get("abstract") or flatten_abstract(
+        work.get("abstract_inverted_index"))
+    doi = (work.get("doi") or "").replace("https://doi.org/", "")
+    decision, reason = screen(work.get("title") or "", abstract)
+    decided_by = "rule"
+
+    if doi in MANUAL_DECISIONS:
+        decision = "exclude"
+        reason = MANUAL_DECISIONS[doi][0]
+        decided_by = "rater"
+
+    location = (work.get("primary_location") or {}).get("source") or {}
+    return {
+        "openalex_id": work["id"],
+        "doi": doi,
+        "year": work.get("publication_year"),
+        "title": work.get("title"),
+        "source": location.get("display_name", ""),
+        "has_abstract": bool(abstract),
+        "decision": decision,
+        "reason": reason,
+        "decided_by": decided_by,
+    }
 
 
 def main():
-    data = json.load(open(os.path.join(SEARCH, "openalex_records.json")))
-    rows = []
-    for w in data["records"]:
-        abstract = w.get("abstract") or inverted_to_text(w.get("abstract_inverted_index"))
-        doi = (w.get("doi") or "").replace("https://doi.org/", "")
-        decision, reason = screen(w.get("title") or "", abstract)
-        source_of_decision = "rule"
-        if doi in MANUAL_DECISIONS:
-            # a recorded rater decision overrides the automated pass
-            decision, reason = "exclude", MANUAL_DECISIONS[doi][0]
-            source_of_decision = "rater"
-        rows.append({"openalex_id": w["id"],
-                     "doi": doi,
-                     "year": w.get("publication_year"), "title": w.get("title"),
-                     "source": ((w.get("primary_location") or {}).get("source") or {}).get("display_name", ""),
-                     "has_abstract": bool(abstract), "decision": decision, "reason": reason,
-                     "decided_by": source_of_decision})
-    with open(os.path.join(SEARCH, "screening_log_regenerated.csv"), "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+    with open(os.path.join(SEARCH, "openalex_records.json")) as fh:
+        records = json.load(fh)["records"]
+
+    rows = [row_for(w) for w in records]
+
+    out = os.path.join(SEARCH, "screening_log_regenerated.csv")
+    with open(out, "w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
-    n_ft = sum(r["decision"] == "full-text" for r in rows)
-    n_rater = sum(r["decided_by"] == "rater" for r in rows)
-    print(f"screened {len(rows)} | to full text {n_ft} | excluded {len(rows) - n_ft}")
-    print(f"  {len(rows) - n_rater} decided by the coded rules, "
-          f"{n_rater} by recorded rater decision (see MANUAL_DECISIONS)")
+
+    to_full_text = sum(r["decision"] == "full-text" for r in rows)
+    by_rater = sum(r["decided_by"] == "rater" for r in rows)
+    print(f"screened {len(rows)} | to full text {to_full_text} "
+          f"| excluded {len(rows) - to_full_text}")
+    print(f"  {len(rows) - by_rater} decided by the coded rules, "
+          f"{by_rater} by recorded rater decision (see MANUAL_DECISIONS)")
 
 
 if __name__ == "__main__":

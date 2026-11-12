@@ -1,9 +1,7 @@
-"""
-Figure 3 — probabilistic net-benefit and global variance decomposition.
+"""Figure 3 -- Sobol indices and Monte Carlo net-benefit probability.
 
-Panel (a) total-order Sobol indices; panel (b) Monte Carlo probability that a product is
-genuinely cleaner, by archetype and CO2 sourcing. Reads results/probabilistic_results.json,
-so run probabilistic_sensitivity.py first:
+Reads results/probabilistic_results.json, so run probabilistic_sensitivity.py
+first:
 
     cd src && python3 probabilistic_sensitivity.py && python3 figure3_probabilistic.py
 """
@@ -19,7 +17,6 @@ with open(os.path.join(RES, "probabilistic_results.json")) as fh:
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 5.4), dpi=300)
 
-# --- (a) Sobol total-order indices ---
 ST = R["sobol"]["ST"]
 order = sorted(ST, key=ST.get)
 vals = [max(0.0, ST[k]) * 100 for k in order]
@@ -42,7 +39,6 @@ ax1.set_title("(a) What governs whether carbonation-cured\nconcrete is cleaner?"
               fontsize=11.5, weight="bold")
 for sp in ("top", "right"): ax1.spines[sp].set_visible(False)
 
-# --- (b) Monte Carlo probability of net benefit ---
 mc = R["monte_carlo"]
 archs = list(mc.keys())
 regimes = ["point-source capture", "direct air capture (DAC)"]

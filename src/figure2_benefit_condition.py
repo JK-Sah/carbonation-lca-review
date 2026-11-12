@@ -1,10 +1,8 @@
-"""
-Figure 2 — net-benefit condition framework.
+"""Figure 2 -- net-benefit condition framework.
 
-Net life-cycle GWP reduction r as a function of CO2 supply-chain intensity s, for the
-three technology archetypes of manuscript Table 4 plus the fresh-mix case carrying a
-strength-compensation penalty. Reproduces Table 4 exactly at s = 0.2:
-r = 76.7 / 33.0 / 7.3 / 0.1 %, with break-even s* = 4.90 / 2.22 / 1.47 / 0.22.
+r against CO2 supply-chain intensity s for the three archetypes of Table 4 plus
+the fresh-mix case carrying a strength penalty. At s = 0.2 this returns the
+Table 4 values: r = 76.7 / 33.0 / 7.3 / 0.1 %, s* = 4.90 / 2.22 / 1.47 / 0.22.
 
     cd src && python3 figure2_benefit_condition.py
 """
@@ -33,7 +31,6 @@ ax.axhline(0, color="#404040", linewidth=0.9)
 ax.text(0.02, -14, "NET GWP INCREASE  (carbonation curing is not cleaner)",
         fontsize=8.5, style="italic", color="#b2182b")
 
-# CO2 sourcing regimes
 ax.axvspan(0.05, 0.35, color="#eef5ea", zorder=0)
 ax.text(0.20, 92, "point-source\ncapture", ha="center", fontsize=8, color="#4d7c3a")
 ax.axvspan(0.55, 1.20, color="#faf3e2", zorder=0)

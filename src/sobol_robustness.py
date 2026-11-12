@@ -1,24 +1,19 @@
-"""
-Robustness of the Sobol global-sensitivity result to the assumed input
-distributions and ranges.
+"""Does the Sobol ranking survive a different choice of priors?
 
-Variance-based sensitivity indices depend on the assumed input space, so the
-dominance of clinker displacement is re-tested under four specifications:
+Variance indices depend on the assumed input space, so the dominance of clinker
+displacement is re-tested under four specifications:
 
-  S1  base        : uniform priors over the wide base ranges (as reported)
-  S2  triangular  : triangular priors peaked at typical (modal) values
-  S3  narrow-A    : clinker-displacement range halved to [0, 150] kg/m3
-                    (excludes full clinker elimination) with the rest at base
-  S4  equal-width : every parameter varied by +/-50% of its own midpoint,
-                    then clipped to physically admissible bounds (removes any
-                    'A has the widest absolute range' artifact without letting
-                    the baseline GWP denominator take an impossible range)
+    S1  uniform priors over the wide base ranges (as reported)
+    S2  triangular priors peaked at modal values
+    S3  clinker-displacement range halved to [0, 150] kg/m3
+    S4  every parameter at +/-50% of its own midpoint, clipped to admissible
+        bounds, which removes the "A has the widest range" artifact
 
-For each specification the total-order Sobol index S_T is reported for all six
-parameters (Jansen estimator). The test is whether the *ranking* is stable, not
-whether the exact percentages match.
+Total-order S_T is reported for all six parameters under each (Jansen
+estimator). What matters is whether the ranking holds, not whether the
+percentages match.
 
-Run:  python src/sobol_robustness.py
+    python src/sobol_robustness.py
 """
 import numpy as np
 from scipy.stats import qmc

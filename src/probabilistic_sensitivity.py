@@ -1,24 +1,19 @@
-"""
-Probabilistic net-benefit analysis and global (Sobol) variance decomposition
-for CO2 mineralization in concrete.
+"""Monte Carlo net-benefit probability and Sobol variance decomposition.
 
-Two analyses, both on the transparent net-benefit model (net_benefit_model.py):
+Both run on the model in net_benefit_model.py.
 
-  E5.  MONTE CARLO net-benefit probability
-       For each technology archetype and CO2 sourcing regime, the probability
-       that a carbonation-cured product is genuinely cleaner (r > 0), plus the
-       median and 5th-95th percentile of the % GWP reduction.
+E5 draws n = 200,000 samples per archetype and CO2 sourcing regime and reports
+the probability that a product is genuinely cleaner (r > 0), with the median
+and 5th-95th percentile of the reduction.
 
-  E6.  SOBOL GLOBAL SENSITIVITY (first-order S1 and total-order ST)
-       Variance-based decomposition over the whole technology input space,
-       answering: which single reported parameter governs whether a product
-       is cleaner? Estimators: Saltelli/Jansen (2010).
+E6 decomposes variance over the whole technology input space with the
+Saltelli/Jansen estimators, giving first-order S1 and total-order ST for each
+parameter.
 
-No fabricated empirical data are used; parameter distributions are expert
-scenario ranges (see net_benefit_model.py docstring).
+Parameter distributions are the mechanism-derived ranges in net_benefit_model.py,
+not fitted values.
 
-Run:  python src/probabilistic_sensitivity.py
-Deps: NumPy, SciPy (scipy.stats.qmc for the Sobol sequence).
+    python src/probabilistic_sensitivity.py        # needs numpy, scipy
 """
 import json
 import os
