@@ -77,6 +77,8 @@ src/
   figure1_prisma.py          Figure 1 (PRISMA flow diagram)
   figure2_benefit_condition.py   Figure 2 (net-benefit condition framework)
   figure3_probabilistic.py   Figure 3 (Sobol indices and Monte Carlo probabilities)
+  figureS8_patent_genealogy.py   Supplementary Figure S8 (patent citation genealogy)
+  graphical_abstract.py      graphical abstract
   net_benefit_model.py       the net-benefit condition model; reproduces Table 4
   probabilistic_sensitivity.py   Monte Carlo (n=200,000) and Sobol indices
   sobol_robustness.py        re-tests the Sobol result under four prior specifications
